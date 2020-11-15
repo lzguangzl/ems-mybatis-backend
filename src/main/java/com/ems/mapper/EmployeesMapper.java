@@ -2,10 +2,12 @@ package com.ems.mapper;
 
 import com.ems.model.Employee;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Mapper
+@Service
 public interface EmployeesMapper {
 
     List<Employee> findEmployees();
