@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS employee_management_system.audit_employees;
 CREATE TABLE employee_management_system.audit_employees
 (
     id            INT PRIMARY KEY AUTO_INCREMENT,
+    emp_id        INT          NOT NULL,
     first_name    VARCHAR(255) NOT NULL,
     last_name     VARCHAR(255) NOT NULL,
     changes       VARCHAR(1000),

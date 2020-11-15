@@ -14,17 +14,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan(value = "com.ems.mapper")
 @SpringBootApplication
 public class EmsMybatisBackendApplication implements ApplicationRunner {
-	private static final Logger logger = LoggerFactory.getLogger(EmsMybatisBackendApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(EmsMybatisBackendApplication.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(EmsMybatisBackendApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(EmsMybatisBackendApplication.class, args);
+    }
 
-	@Override
-	public void run(ApplicationArguments applicationArguments) throws Exception {
-		logger.debug("Debugging log");
-		logger.info("Info log");
-		logger.warn("Hey, This is a warning!");
-		logger.error("Oops! We have an Error. OK");
-	}
+    @Override
+    public void run(ApplicationArguments applicationArguments) throws Exception {
+        logger.debug("Debugging log");
+        logger.info("Info log");
+        logger.warn("Hey, This is a warning!");
+        logger.error("Oops! We have an Error. OK");
+    }
 }
