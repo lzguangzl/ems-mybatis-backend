@@ -66,3 +66,32 @@ CREATE TABLE employee_management_system.employees
 insert into employees(email, first_name, last_name,salary) values('tony_stark@gmail.com', 'Tony', 'Stark', 20000);
 insert into employees(email, first_name, last_name,salary) values('chris_pang@gmail.com', 'Chris', 'Pang', 4000);
 ````
+
+- useGeneratedKeys
+````
+(insert and update only) 
+This tells MyBatis to use the JDBC getGeneratedKeys method to retrieve keys generated internally by the database (e.g. auto increment fields in RDBMS like MySQL or SQL Server).
+Default: false.
+
+<insert id="addEmployeeAudit" parameterType="EmployeeAudit" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+````
+
+- keyProperty
+````
+(insert and update only) 
+Identifies a property into which MyBatis will set the key value returned by getGeneratedKeys, or by a selectKey child element of the insert statement. 
+Default: unset. 
+Can be a comma separated list of property names if multiple generated columns are expected.
+
+<insert id="addEmployeeAudit" parameterType="EmployeeAudit" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+````
+
+- keyColumn
+````
+(insert and update only) 
+Sets the name of the column in the table with a generated key. 
+This is only required in certain databases (like PostgreSQL) when the key column is not the first column in the table. 
+Can be a comma separated list of columns names if multiple generated columns are expected.
+
+<insert id="addEmployeeAudit" parameterType="EmployeeAudit" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+````
