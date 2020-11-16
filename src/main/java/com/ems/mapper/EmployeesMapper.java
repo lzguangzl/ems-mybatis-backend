@@ -1,6 +1,7 @@
 package com.ems.mapper;
 
 import com.ems.model.Employee;
+import com.ems.model.EmployeeAudit;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public interface EmployeesMapper {
 
     Employee getEmployeeLastAdded();
 
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     @Insert("insert into employees(first_name, last_name, email, salary) values (#{first_name}, #{last_name}, #{email}, #{salary})")
     int addEmployee(Employee employee);
 
@@ -25,5 +27,5 @@ public interface EmployeesMapper {
     @Delete("delete from employees where id=#{id}")
     int deleteEmployee(@Param("id") Long id);
 
-    int addEmployeeAudit(@Param("emp_id") Long emp_id, @Param("first_name") String firstName, @Param("last_name") String lastName, String changes);
+    int addEmployeeAudit(EmployeeAudit employeeAudit);
 }

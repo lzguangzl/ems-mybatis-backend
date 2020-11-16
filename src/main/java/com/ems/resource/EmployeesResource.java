@@ -2,6 +2,7 @@ package com.ems.resource;
 
 import com.ems.mapper.EmployeesMapper;
 import com.ems.model.Employee;
+import com.ems.model.EmployeeAudit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -33,12 +34,17 @@ public class EmployeesResource {
      */
     @PostMapping(path = "/employees")
     public List<Employee> createEmployee(@RequestBody Employee employee) {
-        Employee createdEmployee = null;
+
+        EmployeeAudit employeeAudit = null;
         int isCreated = employeesMapper.addEmployee(employee);
-        if(isCreated != 0) {
-            createdEmployee = employeesMapper.getEmployeeLastAdded();
+        if (isCreated != 0) {
+            employeeAudit = new EmployeeAudit();
+            employeeAudit.setEmp_id(employee.getId());
+            employeeAudit.setFirst_name(employee.getFirst_name());
+            employeeAudit.setLast_name(employee.getLast_name());
+            employeeAudit.setChanges("Employee created");
         }
-        employeesMapper.addEmployeeAudit(createdEmployee.getId(), createdEmployee.getFirst_name(), createdEmployee.getLast_name(), "Employee created");
+        employeesMapper.addEmployeeAudit(employeeAudit);
         return employeesMapper.findEmployees();
     }
 
@@ -48,8 +54,16 @@ public class EmployeesResource {
     @PutMapping(path = "/employees/{id}")
     public List<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
         double salary = employee.getSalary();
-        employeesMapper.updateEmployee(id, salary);
-        employeesMapper.addEmployeeAudit(id, employee.getFirst_name(), employee.getLast_name(), "Employee updated");
+        EmployeeAudit employeeAudit = null;
+        int isUpdated = employeesMapper.updateEmployee(id, salary);
+        if (isUpdated != 0) {
+            employeeAudit = new EmployeeAudit();
+            employeeAudit.setEmp_id(id);
+            employeeAudit.setFirst_name(employee.getFirst_name());
+            employeeAudit.setLast_name(employee.getLast_name());
+            employeeAudit.setChanges("Employee updated");
+        }
+        employeesMapper.addEmployeeAudit(employeeAudit);
         return employeesMapper.findEmployees();
     }
 
@@ -58,9 +72,17 @@ public class EmployeesResource {
      */
     @DeleteMapping(path = "/employees/{id}")
     public List<Employee> deleteEmployee(@PathVariable Long id) {
+        EmployeeAudit employeeAudit = null;
         Employee deletedEmployee = employeesMapper.getEmployeeById(id);
-        employeesMapper.deleteEmployee(id);
-        employeesMapper.addEmployeeAudit(id, deletedEmployee.getFirst_name(), deletedEmployee.getLast_name(), "Employee deleted");
+        int isDeleted = employeesMapper.deleteEmployee(id);
+        if (isDeleted != 0) {
+            employeeAudit = new EmployeeAudit();
+            employeeAudit.setEmp_id(id);
+            employeeAudit.setFirst_name(deletedEmployee.getFirst_name());
+            employeeAudit.setLast_name(deletedEmployee.getLast_name());
+            employeeAudit.setChanges("Employee deleted");
+        }
+        employeesMapper.addEmployeeAudit(employeeAudit);
         return employeesMapper.findEmployees();
     }
 }

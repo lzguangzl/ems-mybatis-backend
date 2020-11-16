@@ -19,7 +19,7 @@
         where id = (SELECT max(id) FROM employee_management_system.employees)
     </select>
 
-    <insert id="addEmployeeAudit" parameterType="Employee">
+    <insert id="addEmployeeAudit" parameterType="EmployeeAudit" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO employee_management_system.audit_employees (emp_id, first_name, last_name, changes)
         VALUES (#{emp_id}, #{first_name}, #{last_name}, #{changes});
     </insert>
