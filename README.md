@@ -29,7 +29,7 @@ Dependencies
 - MyBatis
 - MySQL Driver
 - Log4j2
-- Junit5
+- JUnit5
 
 ### Create the database and tables using SQL
 ````

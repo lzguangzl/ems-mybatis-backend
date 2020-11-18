@@ -27,8 +27,8 @@ public class EmployeesMapperTest {
     }
 
     @BeforeEach
-    void init() {
-        logger.info("@BeforeEach - executes before each test method in this class");
+    void init(TestInfo testInfo) {
+        logger.info("@BeforeEach - executes before " + testInfo.getDisplayName());
 
         Employee employee1 = new Employee(1, "Joe", "Doe", "joe_doe@gmail.com", 1200.0);
         Employee employee2 = new Employee(2, "Jane", "Doe", "jane_doe@gmail.com", 3000.0);
@@ -46,8 +46,8 @@ public class EmployeesMapperTest {
     }
 
     @AfterEach
-    void tearDown() {
-        logger.info("@AfterEach - executed after each test method.");
+    void tearDown(TestInfo testInfo) {
+        logger.info("@AfterEach - executed after " + testInfo.getDisplayName());
     }
 
     @AfterAll
