@@ -26,7 +26,7 @@ public class EmployeesResource {
     @GetMapping(path = "/employees")
     public List<Employee> getAllEmployees() {
         logger.info("Get All Employees");
-        return employeesMapper.findEmployees();
+        return employeesMapper.getEmployees();
     }
 
     /**
@@ -45,7 +45,7 @@ public class EmployeesResource {
             employeeAudit.setChanges("Employee created");
         }
         employeesMapper.addEmployeeAudit(employeeAudit);
-        return employeesMapper.findEmployees();
+        return employeesMapper.getEmployees();
     }
 
     /**
@@ -64,7 +64,7 @@ public class EmployeesResource {
             employeeAudit.setChanges("Employee updated");
         }
         employeesMapper.addEmployeeAudit(employeeAudit);
-        return employeesMapper.findEmployees();
+        return employeesMapper.getEmployees();
     }
 
     /**
@@ -83,6 +83,6 @@ public class EmployeesResource {
             employeeAudit.setChanges("Employee deleted");
         }
         employeesMapper.addEmployeeAudit(employeeAudit);
-        return employeesMapper.findEmployees();
+        return employeesMapper.getEmployees();
     }
 }

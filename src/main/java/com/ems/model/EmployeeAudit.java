@@ -1,6 +1,7 @@
 package com.ems.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class EmployeeAudit implements Serializable {
 
@@ -13,6 +14,13 @@ public class EmployeeAudit implements Serializable {
     private String changes;
 
     public EmployeeAudit() {
+    }
+
+    public EmployeeAudit(long emp_id, String first_name, String last_name, String changes) {
+        this.emp_id = emp_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.changes = changes;
     }
 
     public long getId() {
@@ -53,5 +61,22 @@ public class EmployeeAudit implements Serializable {
 
     public void setChanges(String changes) {
         this.changes = changes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EmployeeAudit)) return false;
+        EmployeeAudit that = (EmployeeAudit) o;
+        return id == that.id &&
+                emp_id == that.emp_id &&
+                Objects.equals(first_name, that.first_name) &&
+                Objects.equals(last_name, that.last_name) &&
+                Objects.equals(changes, that.changes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, emp_id, first_name, last_name, changes);
     }
 }

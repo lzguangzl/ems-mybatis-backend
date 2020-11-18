@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public interface EmployeesMapper {
 
-    List<Employee> findEmployees();
+    List<Employee> getEmployees();
 
     Employee getEmployeeById(@Param("id") Long id);
 
