@@ -22,13 +22,13 @@ public class EmployeesMapperTest {
     EmployeesMapper employeesMapper;
 
     @BeforeAll
-    static void setup() {
-        logger.info("@BeforeAll - executes once before all test methods in this class");
+    static void setup(TestInfo testInfo) {
+        logger.info("@BeforeAll - Start executing {}", testInfo.getDisplayName());
     }
 
     @BeforeEach
     void init(TestInfo testInfo) {
-        logger.info("@BeforeEach - executes before " + testInfo.getDisplayName());
+        logger.info("@BeforeEach - executes before {}", testInfo.getDisplayName());
 
         Employee employee1 = new Employee(1, "Joe", "Doe", "joe_doe@gmail.com", 1200.0);
         Employee employee2 = new Employee(2, "Jane", "Doe", "jane_doe@gmail.com", 3000.0);
@@ -47,12 +47,12 @@ public class EmployeesMapperTest {
 
     @AfterEach
     void tearDown(TestInfo testInfo) {
-        logger.info("@AfterEach - executed after " + testInfo.getDisplayName());
+        logger.info("@AfterEach - executed after {}", testInfo.getDisplayName());
     }
 
     @AfterAll
-    static void done() {
-        logger.info("@AfterAll - executed after all test methods.");
+    static void done(TestInfo testInfo) {
+        logger.info("@AfterAll - End executing {}", testInfo.getDisplayName());
     }
 
     @DisplayName("Test EmployeesMapper: getEmployees()")
@@ -95,7 +95,7 @@ public class EmployeesMapperTest {
     @DisplayName("Test EmployeesMapper: deleteEmployee()")
     @Test
     void testDeleteEmployee() {
-       assertEquals(1, employeesMapper.deleteEmployee((long) 1));
+        assertEquals(1, employeesMapper.deleteEmployee((long) 1));
     }
 
     @DisplayName("Test EmployeesMapper: addEmployeeAudit()")
