@@ -30,6 +30,7 @@ Dependencies
 - MySQL Driver
 - Log4j2
 - JUnit5
+- Swagger
 
 ### Create the database and tables using SQL
 ````
@@ -95,4 +96,65 @@ This is only required in certain databases (like PostgreSQL) when the key column
 Can be a comma separated list of columns names if multiple generated columns are expected.
 
 <insert id="addEmployeeAudit" parameterType="EmployeeAudit" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+````
+
+### Swagger
+- Springfox implementation of the Swagger specification
+````
+The configuration of Swagger mainly centers around the Docket bean.
+After defining the Docket bean, its select() method returns an instance of ApiSelectorBuilder, which provides a way to control the endpoints exposed by Swagger.
+We can configure predicates for selecting RequestHandlers with the help of RequestHandlerSelectors and PathSelectors. 
+Using any() for both will make documentation for our entire API available through Swagger.
+
+To verify if Swagger is working:
+http://localhost:8080/<your-app-root>/v2/api-docs
+http://localhost:8080/<your-app-root>/swagger-ui.html
+````
+
+Name | Description 
+--- | --- 
+@Api | Marks a class as a Swagger resource.
+@ApiModel |	Provides additional information about Swagger models.
+@ApiModelProperty |	Adds and manipulates data of a model property.
+@ApiOperation |	Describes an operation or typically a HTTP method against a specific path.
+@ApiParam | Adds additional meta-data for operation parameters.
+@ApiResponse | Describes a possible response of an operation.
+@ApiResponses | A wrapper to allow a list of multiple ApiResponse objects.
+
+- You may encounter this warning when accessing your swagger-ui.html (swagger documentation)
+````
+07-12-2020 01:02:44.076 [http-nio-8080-exec-10] WARN  io.swagger.models.parameters.AbstractSerializableParameter - Illegal DefaultValue null for parameter type integer
+java.lang.NumberFormatException: For input string: ""
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:68) ~[?:?]
+	at java.lang.Long.parseLong(Long.java:709) ~[?:?]
+	at java.lang.Long.valueOf(Long.java:1151) ~[?:?]
+	at io.swagger.models.parameters.AbstractSerializableParameter.getExample(AbstractSerializableParameter.java:412) [swagger-models-1.5.20.jar:1.5.20]
+````
+- As workaround, you can ignore AbstractSerializableParameter class severity warning, by set it severity to error
+- These configuration will silent the warning messages. To leave the severity as is, and make the warning disappear, add the below code into application properties:
+````
+logging.level.io.swagger.models.parameters.AbstractSerializableParameter=ERROR
+````
+
+### JUnit 5
+- @TestMethodOrder to control the execution order of tests.
+- @TestMethodOrder(MethodOrderer.OrderAnnotation.class) + @Order(x) annotation to enforce tests to run in a specific order, where x is the order number.
+- @TestMethodOrder(Alphanumeric.class) to run tests based on their names in alphanumeric order.
+- Custom order by implementing the MethodOrderer Interface
+````
+Example of custom order:
+
+public class CustomOrder implements MethodOrderer {
+    @Override
+    public void orderMethods(MethodOrdererContext context) {
+        context.getMethodDescriptors().sort(
+         (MethodDescriptor m1, MethodDescriptor m2)->
+           m1.getMethod().getName().compareToIgnoreCase(m2.getMethod().getName()));
+    }
+}
+
+@TestMethodOrder(CustomOrder.class)
+public class CustomOrderUnitTest {
+    ... ... 
+}
 ````

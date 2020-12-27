@@ -1,16 +1,25 @@
 package com.ems.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@ApiModel(description = "Class representing a employee in the application")
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(notes = "Unique identifier of the employee", example = "1", required = true, position = 0)
     private long id;
+    @ApiModelProperty(notes = "First name of the employee", example = "James", required = true, position = 1)
     private String first_name;
+    @ApiModelProperty(notes = "Last name of the employee", example = "Bond", required = true, position = 2)
     private String last_name;
+    @ApiModelProperty(notes = "Email address of the employee", example = "jamesbond@gmail.com", required = true, position = 3)
     private String email;
+    @ApiModelProperty(notes = "Salary of the employee", example = "4000", required = true, position = 4)
     private double salary;
 
     public Employee() {
